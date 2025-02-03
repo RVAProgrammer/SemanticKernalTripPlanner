@@ -29,7 +29,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/plan", async (ITripPlanner tripPlanner, [FromBody] TripRequest tripRequest) =>
 {
-    var response = await tripPlanner.GetTripPlan(tripRequest);
+    var response = await tripPlanner.GetTripPlanWithWeather(tripRequest);
     return Results.Ok(response);
     
 });
