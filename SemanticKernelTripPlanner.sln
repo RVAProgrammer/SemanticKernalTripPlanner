@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticKernelTripPlanner", "SemanticKernelTripPlanner\SemanticKernelTripPlanner.csproj", "{0B91DCF0-5694-4530-84FF-C4A34AF22E7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticKernelTripPlanner.Application", "SemanticKernelTripPlanner.Application\SemanticKernelTripPlanner.Application.csproj", "{ADBC542F-0AA7-497C-9873-0DCB69CF567C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B91DCF0-5694-4530-84FF-C4A34AF22E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B91DCF0-5694-4530-84FF-C4A34AF22E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B91DCF0-5694-4530-84FF-C4A34AF22E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B91DCF0-5694-4530-84FF-C4A34AF22E7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADBC542F-0AA7-497C-9873-0DCB69CF567C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADBC542F-0AA7-497C-9873-0DCB69CF567C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADBC542F-0AA7-497C-9873-0DCB69CF567C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADBC542F-0AA7-497C-9873-0DCB69CF567C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

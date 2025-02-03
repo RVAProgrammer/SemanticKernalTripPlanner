@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>SemanticKernelTripPlanner.Application</AssemblyName>
+        <RootNamespace>SemanticKernelTripPlanner.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Agents\" />
+      <Folder Include="Plugins\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Identity" Version="1.13.2" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
+      <PackageReference Include="Microsoft.Identity.Client" Version="4.67.2" />
+      <PackageReference Include="Microsoft.SemanticKernel" Version="1.35.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Agents.OpenAI" Version="1.35.0-alpha" />
+      <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.35.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Plugins.OpenApi" Version="1.35.0-preview" />
+    </ItemGroup>
+
+</Project>
