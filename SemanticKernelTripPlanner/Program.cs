@@ -18,6 +18,11 @@ builder.Services.Configure<AzureOpenAIConfiguration>(builder.Configuration.GetSe
 builder.Services.Configure<AzureSearchConfiguration>(builder.Configuration.GetSection(AzureSearchConfiguration.SectionName));
 
 builder.Services.AddScoped<ITripPlanner, TripPlanner>();
+
+#pragma warning disable SKEXP0110
+builder.Services.AddScoped<ITravelAgent, TravelAgent>();
+
+#pragma warning restore SKEXP0110
 builder.Services.AddScoped<IEmbeddingService, EmbeddingService>();
 
 var app = builder.Build();

@@ -19,6 +19,7 @@
       <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
       <PackageReference Include="Microsoft.Identity.Client" Version="4.67.2" />
       <PackageReference Include="Microsoft.SemanticKernel" Version="1.35.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.35.0-alpha" />
       <PackageReference Include="Microsoft.SemanticKernel.Agents.OpenAI" Version="1.35.0-alpha" />
       <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.35.0" />
       <PackageReference Include="Microsoft.SemanticKernel.Plugins.OpenApi" Version="1.35.0-preview" />

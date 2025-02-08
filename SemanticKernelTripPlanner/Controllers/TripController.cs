@@ -11,11 +11,13 @@ public class TripController
 {
     private readonly ITripPlanner _tripPlanner;
     private readonly IEmbeddingService _embeddingService;
+    private readonly ITravelAgent _travelAgent; 
 
-    public TripController(ITripPlanner tripPlanner, IEmbeddingService embeddingService)
+    public TripController(ITripPlanner tripPlanner, IEmbeddingService embeddingService, ITravelAgent travelAgent)
     {
             _tripPlanner = tripPlanner; 
             _embeddingService = embeddingService;
+            _travelAgent = travelAgent;
     }
 
 
@@ -30,6 +32,14 @@ public class TripController
     public async Task<IActionResult> PlanTripRag([FromBody] TripRequest tripRequest)
     {
         var response = await _tripPlanner.GetTripPlanWithWeatherRag(tripRequest);
+        return new ContentResult {Content = response};
+    }
+    
+    [HttpPost("plan/agent")]
+    public async Task<IActionResult> PlanTripAgent([FromBody] TripRequest tripRequest)
+    {
+        _travelAgent.Init();
+        var response = await _travelAgent.PlanTrip(tripRequest.TripDescription);
         return new ContentResult {Content = response};
     }
 
