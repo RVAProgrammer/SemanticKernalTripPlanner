@@ -16,4 +16,8 @@
       <ProjectReference Include="..\SemanticKernelTripPlanner.Application\SemanticKernelTripPlanner.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="uploads\" />
+    </ItemGroup>
+
 </Project>

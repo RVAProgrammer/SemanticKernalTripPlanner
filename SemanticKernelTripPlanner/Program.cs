@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using SemanticKernelTripPlanner.Application;
 using SemanticKernelTripPlanner.Application.Configuration;
 using SemanticKernelTripPlanner.Application.DTO;
+using SemanticKernelTripPlanner.Application.Services;
+#pragma warning disable SKEXP0010
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
 
 builder.Services.Configure<AzureOpenAIConfiguration>(builder.Configuration.GetSection(AzureOpenAIConfiguration.SectionName));
+builder.Services.Configure<AzureSearchConfiguration>(builder.Configuration.GetSection(AzureSearchConfiguration.SectionName));
+
 builder.Services.AddScoped<ITripPlanner, TripPlanner>();
+builder.Services.AddScoped<IEmbeddingService, EmbeddingService>();
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -25,14 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
-app.MapPost("/plan", async (ITripPlanner tripPlanner, [FromBody] TripRequest tripRequest) =>
-{
-    var response = await tripPlanner.GetTripPlanWithWeather(tripRequest);
-    return Results.Ok(response);
-    
-});
+app.UseRouting();
+app.MapControllers();
 
 app.Run();
 
