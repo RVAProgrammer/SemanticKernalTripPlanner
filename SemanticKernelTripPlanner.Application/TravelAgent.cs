@@ -57,19 +57,22 @@ public class TravelAgent(
             _azureOpenAIConfiguration.URI, new BearerTokenCredential(),
             httpClient: new HttpClient(new ProxyOpenAIHandler()));
         
-        kernel.Plugins.AddFromType<WeatherPlugin>("Weather");
-        
-        kernel.Plugins.AddFromObject(new SearchTripIndexPlugin(_azureSearchConfiguration, _embeddingService)); 
-        
         var builder = kernel.Build();
+
+        var weatherKernel = builder.Clone();
+        weatherKernel.Plugins.AddFromType<WeatherPlugin>("Weather");
+
+        var parkRangerKernel = builder.Clone();
+        parkRangerKernel.Plugins.AddFromObject(new SearchTripIndexPlugin(_azureSearchConfiguration, _embeddingService));
+        
         var executionSettings = new AzureOpenAIPromptExecutionSettings()
             { ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions };
 
         
         _travelAgentAgent= new ChatCompletionAgent { Instructions = _travelAgentInstructions, Name = "TravelAgent", Kernel = builder };
-        _outfitterAgent = new ChatCompletionAgent { Instructions = _outfitterInstructions, Name = "Outfitter", Kernel = builder, Arguments  = new KernelArguments(executionSettings) };
-        _weatherManAgent = new ChatCompletionAgent { Instructions = _weatherManInstructions, Name = "WeatherMan", Kernel = builder , Arguments  = new KernelArguments(executionSettings)};
-        _parkRangerAgent = new ChatCompletionAgent {Instructions = _parkRangerInstructions, Name = "ParkRanger", Kernel = builder, Arguments  = new KernelArguments(executionSettings) };
+        _outfitterAgent = new ChatCompletionAgent { Instructions = _outfitterInstructions, Name = "Outfitter", Kernel = builder};
+        _weatherManAgent = new ChatCompletionAgent { Instructions = _weatherManInstructions, Name = "WeatherMan", Kernel = weatherKernel , Arguments  = new KernelArguments(executionSettings)};
+        _parkRangerAgent = new ChatCompletionAgent {Instructions = _parkRangerInstructions, Name = "ParkRanger", Kernel = parkRangerKernel, Arguments  = new KernelArguments(executionSettings) };
     }
 
     public async Task<string?> PlanTrip(string tripRequest)
