@@ -19,10 +19,16 @@ public class TripController
             _embeddingService = embeddingService;
             _travelAgent = travelAgent;
     }
-
-
+    
     [HttpPost("plan")]
     public async Task<IActionResult> PlanTrip([FromBody] TripRequest tripRequest)
+    {
+        var response = await _tripPlanner.GetTripPlan(tripRequest);
+        return new ContentResult {Content = response};
+    }
+
+    [HttpPost("plan/plugin")]
+    public async Task<IActionResult> PlanTripPlugin([FromBody] TripRequest tripRequest)
     {
         var response = await _tripPlanner.GetTripPlanWithWeather(tripRequest);
         return new ContentResult {Content = response};
