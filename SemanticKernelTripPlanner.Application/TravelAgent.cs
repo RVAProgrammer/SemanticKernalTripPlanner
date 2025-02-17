@@ -7,6 +7,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using SemanticKernalTripPlanner.Application.Identity;
+using SemanticKernelTripPlanner.Application.Agents;
 using SemanticKernelTripPlanner.Application.Configuration;
 using SemanticKernelTripPlanner.Application.Plugins;
 using SemanticKernelTripPlanner.Application.Services;
@@ -53,49 +54,13 @@ public class TravelAgent(
     
     public void Init()
     {
-        var kernel = Kernel.CreateBuilder().AddAzureOpenAIChatCompletion(_azureOpenAIConfiguration.DeploymentName,
-            _azureOpenAIConfiguration.URI, new BearerTokenCredential(),
-            httpClient: new HttpClient(new ProxyOpenAIHandler()));
-        
-        var builder = kernel.Build();
-
-        var weatherKernel = builder.Clone();
-        weatherKernel.Plugins.AddFromType<WeatherPlugin>("Weather");
-
-        var parkRangerKernel = builder.Clone();
-        parkRangerKernel.Plugins.AddFromObject(new SearchTripIndexPlugin(_azureSearchConfiguration, _embeddingService));
-        
-        var executionSettings = new AzureOpenAIPromptExecutionSettings()
-            { ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions };
-
-        
-        _travelAgentAgent= new ChatCompletionAgent { Instructions = _travelAgentInstructions, Name = "TravelAgent", Kernel = builder };
-        _outfitterAgent = new ChatCompletionAgent { Instructions = _outfitterInstructions, Name = "Outfitter", Kernel = builder};
-        _weatherManAgent = new ChatCompletionAgent { Instructions = _weatherManInstructions, Name = "WeatherMan", Kernel = weatherKernel , Arguments  = new KernelArguments(executionSettings)};
-        _parkRangerAgent = new ChatCompletionAgent {Instructions = _parkRangerInstructions, Name = "ParkRanger", Kernel = parkRangerKernel, Arguments  = new KernelArguments(executionSettings) };
+      
     }
 
     public async Task<string?> PlanTrip(string tripRequest)
     {
-        var chat = new AgentGroupChat(_travelAgentAgent, _weatherManAgent, _outfitterAgent, _parkRangerAgent)
-        {
-            ExecutionSettings =
-            {
-                TerminationStrategy = { MaximumIterations = 5 }
-            }
-        };
+        return await Task.FromResult("Lets go");
 
-        chat.AddChatMessage(new ChatMessageContent(AuthorRole.User, tripRequest));
-        Console.WriteLine($"# {AuthorRole.User}: '{tripRequest}'");
-
-        await foreach (var content in chat.InvokeAsync())
-        {
-            Console.WriteLine($"# {content.Role} - {content.AuthorName ?? "*"}: '{content.Content}'");
-        }
-
-        var mostRecentMessage = await chat.GetChatMessagesAsync().FirstOrDefaultAsync();
-
-        return mostRecentMessage == null ? "" : mostRecentMessage.Content;
     }
 
 
