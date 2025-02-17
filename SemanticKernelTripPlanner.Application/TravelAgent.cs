@@ -7,7 +7,6 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using SemanticKernalTripPlanner.Application.Identity;
-using SemanticKernelTripPlanner.Application.Agents;
 using SemanticKernelTripPlanner.Application.Configuration;
 using SemanticKernelTripPlanner.Application.Plugins;
 using SemanticKernelTripPlanner.Application.Services;
