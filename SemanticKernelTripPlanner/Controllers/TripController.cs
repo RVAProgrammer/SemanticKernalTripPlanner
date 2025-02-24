@@ -19,11 +19,9 @@ public class TripController
             _embeddingService = embeddingService;
             _travelAgent = travelAgent;
     }    
-    [HttpPost("plan/agent")]
-    public async Task<IActionResult> PlanTripAgent([FromBody] TripRequest tripRequest)
+    [HttpPost("plan")]
+    public async Task<IActionResult> PlanTrip([FromBody] TripRequest tripRequest)
     {
-        _travelAgent.Init();
-        var response = await _travelAgent.PlanTrip(tripRequest.TripDescription);
-        return new ContentResult {Content = response};
+        return new OkResult();
     }
 }
